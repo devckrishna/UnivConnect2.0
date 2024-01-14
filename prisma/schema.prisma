@@ -1,11 +1,36 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+  id              String    @id @default(uuid())
+  name            String
+  email           String
+  description     String
+  country         String
+  university      String    @default("None")
+  image           String
+  gender          String
+  rating          Float     @default(0.0)
+  student_booking Booking[] @relation("StudentBooking")
+  mentor_booking  Booking[] @relation("MentorBooking")
+  isMentor        Boolean
+}
+
+model Booking {
+  id      String @id @default(uuid())
+  date    String
+  student User   @relation(name: "StudentBooking", fields: [user_id], references: [id])
+  user_id String
+
+  mentor     User   @relation(name: "MentorBooking", fields: [mentor_id], references: [id])
+  mentor_id  String
+  start_time String
+  end_time   String
 }
