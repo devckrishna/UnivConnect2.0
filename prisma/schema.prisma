@@ -20,11 +20,13 @@ model User {
   rating          Float     @default(0.0)
   student_booking Booking[] @relation("StudentBooking")
   mentor_booking  Booking[] @relation("MentorBooking")
+  slots           Slot[]    @relation("Slot")
   isMentor        Boolean
 }
 
 model Booking {
   id      String @id @default(uuid())
+  slots   String
   date    String
   student User   @relation(name: "StudentBooking", fields: [user_id], references: [id])
   user_id String
@@ -33,4 +35,12 @@ model Booking {
   mentor_id  String
   start_time String
   end_time   String
+}
+
+model Slot {
+  id      String @id @default(uuid())
+  cost    Int
+  user    User   @relation(name: "Slot", fields: [user_id], references: [id])
+  user_id String @unique
+  timings String
 }

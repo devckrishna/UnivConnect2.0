@@ -1,6 +1,6 @@
 import Image from "next/image";
 import localFont from "@next/font/local";
-import logo from "../public/logo.png";
+import logo from "../public/logo-dashboard.png";
 import LandingVector from "../public/LandingBack.jpg";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <div className="h-full">
       <div className="h-20  flex items-center justify-between shadow-md">
-        <Image src={logo} alt={"logo"} className="h-12 w-auto mx-10" />
+        <Image src={logo} alt={"logo"} className="h-16 w-auto mx-10" />
 
         <Link href="/sign-in">
           <Button

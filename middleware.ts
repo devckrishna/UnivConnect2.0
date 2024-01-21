@@ -6,7 +6,15 @@ import { db } from "./utils/db";
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 
 export default authMiddleware({
-  publicRoutes: ["/", "/api/user/mentor", "/api/user/student", "/api/user/:id"],
+  publicRoutes: [
+    "/",
+    "/api/user/mentor",
+    "/api/user/student",
+    "/api/user/:id",
+    "/api/user/mentor/getbyemail",
+    "/api/user/mentor/createslot",
+    "/api/user/mentor/getSlot",
+  ],
 });
 
 export const config = {

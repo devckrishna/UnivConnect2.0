@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
-import { useUser } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -67,6 +67,9 @@ const OnBoarding = () => {
 
   return (
     <div className="mb-20 w-full px-72">
+      <div className="my-2">
+        <UserButton afterSignOutUrl="/" />
+      </div>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
