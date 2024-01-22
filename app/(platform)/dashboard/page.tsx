@@ -36,11 +36,10 @@ const Dashboard = () => {
     setMentors(users.data);
   };
 
-  checkMentor();
-
   useEffect(() => {
     getMentors();
-  }, []);
+    checkMentor();
+  }, [user]);
 
   if (isMentor === true) {
     return <MentorTimings />;
