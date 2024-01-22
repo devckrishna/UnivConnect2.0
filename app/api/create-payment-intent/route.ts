@@ -42,8 +42,8 @@ export async function POST(request: NextRequest) {
           enabled: false,
         },
 
-        success_url: `https://${process.env.VERCEL_URL}/mentor/${body[0]["mentor_id"]}?success=true&date=${body[0]["date"]}&start_time=${body[0]["start_time"]}`,
-        cancel_url: `https://${process.env.VERCEL_URL}/mentor/${body[0]["mentor_id"]}?success=false`,
+        success_url: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/mentor/${body[0]["mentor_id"]}?success=true&date=${body[0]["date"]}&start_time=${body[0]["start_time"]}`,
+        cancel_url: `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/mentor/${body[0]["mentor_id"]}?success=false`,
       });
       return NextResponse.json({ session });
     } else {
