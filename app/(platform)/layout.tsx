@@ -31,17 +31,17 @@ const PlatformLayout = async ({ children }: { children: React.ReactNode }) => {
             className="h-16 w-auto mx-10 mb-10"
           />
           <Link href="/dashboard">
-            <Button variant="outline" className="w-64 flex justify-start">
+            <Button variant="outline" className="w-full flex justify-start">
               Home
             </Button>
           </Link>
           <Link href="/bookings">
-            <Button variant="outline" className="w-64 flex justify-start">
+            <Button variant="outline" className="w-full flex justify-start">
               My Bookings
             </Button>
           </Link>
           <Link href="/explore">
-            <Button variant="outline" className="w-64 flex justify-start">
+            <Button variant="outline" className="w-full flex justify-start">
               Explore
             </Button>
           </Link>
