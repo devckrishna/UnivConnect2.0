@@ -11,6 +11,8 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { bookingmap } from "@/utils/bookingmap";
 
+import loadingImage from "../../../../public/loading.gif";
+
 import {
   Popover,
   PopoverContent,
@@ -52,6 +54,7 @@ type MentorObj = {
 
 const MentorProfilePage = ({ params }: { params: { id: string } }) => {
   const searchParams = useSearchParams();
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
   const { user } = useUser();
   const router = useRouter();
@@ -92,6 +95,7 @@ const MentorProfilePage = ({ params }: { params: { id: string } }) => {
     setPrice(Number(slotDetails.data["cost"]));
     setBookings([]);
     setBookings((prev) => [...prev, ...timingsArray.sort().slice(1)]);
+    setIsLoading(false);
   };
 
   const handleCheckout = async () => {
@@ -165,7 +169,13 @@ const MentorProfilePage = ({ params }: { params: { id: string } }) => {
     getMentorDetails();
   }, [user]);
 
-  if (isAvailable === false) {
+  if (isLoading === true) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center ">
+        <Image className="h-10 w-auto" src={loadingImage} alt="loading" />
+      </div>
+    );
+  } else if (isAvailable === false) {
     return (
       <div className="grid grid-cols-2 gap-28 w-10/12 overflow-y-auto pr-36">
         <div className="flex flex-col  p-10">

@@ -5,6 +5,8 @@ import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import loadingImage from "../../../public/loading.gif";
+import Image from "next/image";
 
 type BookingObj = {
   id: string;
@@ -16,6 +18,7 @@ type BookingObj = {
 
 const Bookings = () => {
   const { user } = useUser();
+  const [isLoading, setIsLoading] = useState(true);
   const [bookings, setBookings] = useState<BookingObj[]>([]);
   const router = useRouter();
   const [isMentor, setIsMentor] = useState(false);
@@ -47,6 +50,7 @@ const Bookings = () => {
     // console.log(currBookings.data[2]["date"]);
     setBookings([]);
     setBookings([...currBookings.data]);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -57,7 +61,11 @@ const Bookings = () => {
     }
   }, [user, bookings]);
 
-  return (
+  return isLoading === true ? (
+    <div className="h-screen w-screen flex items-center justify-center ">
+      <Image className="h-10 w-auto" src={loadingImage} alt="loading" />
+    </div>
+  ) : (
     <div className="h-screen w-10/12 overflow-y-auto flex flex-col p-10">
       <div className="text-2xl font-bold tracking-wider">Upcoming Bookings</div>
       <div className="border-1 my-6">
