@@ -87,6 +87,7 @@ const MentorTimings = () => {
             if (selectedTime.indexOf(index) >= 0) {
               return (
                 <Button
+                  key={index}
                   variant="outline"
                   className="text-green-600 border-green-600"
                   onClick={() =>
@@ -101,6 +102,7 @@ const MentorTimings = () => {
             } else {
               return (
                 <Button
+                  key={index}
                   variant="outline"
                   className="hover:text-green-600 hover:border-green-600"
                   onClick={() => setSelectedTime((prev) => [...prev, index])}

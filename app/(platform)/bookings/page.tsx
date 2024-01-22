@@ -67,7 +67,10 @@ const Bookings = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {bookings.map((currBooking) => {
           return (
-            <div className="flex flex-col border-2 gap-2 p-5">
+            <div
+              key={currBooking["id"]}
+              className="flex flex-col border-2 gap-2 p-5"
+            >
               <div className="flex gap-2">
                 <div className="font-bold tracking-wide">Date:</div>
                 <div className="text-green-700 font-bold">
@@ -83,6 +86,7 @@ const Bookings = () => {
               </div>
 
               <Button
+                key={currBooking["id"]}
                 onClick={() =>
                   router.push(
                     "/videocall/" +

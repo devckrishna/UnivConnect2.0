@@ -50,7 +50,7 @@ const Dashboard = () => {
         <div className="text-3xl font-bold my-5">Available Mentors</div>
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
           {mentors.map((mentor) => (
-            <ProfileCard {...mentor} />
+            <ProfileCard key={mentor.id} {...mentor} />
           ))}
         </div>
       </div>
