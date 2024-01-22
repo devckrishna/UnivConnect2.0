@@ -297,6 +297,7 @@ const MentorProfilePage = ({ params }: { params: { id: string } }) => {
                   if (index === selectedTime) {
                     return (
                       <Button
+                        key={index}
                         variant="outline"
                         className="text-green-600 border-green-600"
                         onClick={() => setSelectedTime(-1)}
@@ -307,6 +308,7 @@ const MentorProfilePage = ({ params }: { params: { id: string } }) => {
                   } else {
                     return (
                       <Button
+                        key={index}
                         variant="outline"
                         className="hover:text-green-600 hover:border-green-600"
                         onClick={() => setSelectedTime(index)}
