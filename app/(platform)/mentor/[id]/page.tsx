@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import defaultProfile from "../../../../public/default-profile.jpg";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
@@ -19,6 +19,8 @@ import {
 import axios from "axios";
 import Link from "next/link";
 import getStipePromise from "@/lib/stripe";
+import { useUser } from "@clerk/nextjs";
+import { useToast } from "@/components/ui/use-toast";
 
 const star = (
   <svg
@@ -49,6 +51,9 @@ type MentorObj = {
 };
 
 const MentorProfilePage = ({ params }: { params: { id: string } }) => {
+  const searchParams = useSearchParams();
+  const { toast } = useToast();
+  const { user } = useUser();
   const router = useRouter();
   const [date, setDate] = useState<Date>();
   const [bookings, setBookings] = useState<string[]>([]);
@@ -82,7 +87,6 @@ const MentorProfilePage = ({ params }: { params: { id: string } }) => {
       setIsAvailable(false);
       return;
     }
-
     const timingsArray = slotDetails.data["timings"].split(",");
 
     setPrice(Number(slotDetails.data["cost"]));
@@ -98,7 +102,15 @@ const MentorProfilePage = ({ params }: { params: { id: string } }) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       cache: "no-cache",
-      body: JSON.stringify([{ name: "booking", price: price }]),
+      body: JSON.stringify([
+        {
+          name: "booking",
+          price: price,
+          mentor_id: mentorDetails.id,
+          date: date,
+          start_time: bookings[selectedTime],
+        },
+      ]),
     });
 
     const data = await response.json();
@@ -108,9 +120,50 @@ const MentorProfilePage = ({ params }: { params: { id: string } }) => {
     }
   };
 
+  const handleSuccessfull = async (
+    email: string,
+    date: string,
+    start_time: string
+  ) => {
+    const currUser = await axios.post("/api/user/mentor/getbyemail", {
+      email: email,
+    });
+    const user_id = currUser.data["id"];
+    // console.log(date);
+    // console.log(start_time);
+    // console.log(user_id);
+    // console.log(mentorDetails.id);
+    const booking = await axios.post("/api/booking", {
+      user_id,
+      date,
+      start_time,
+      mentor_id: mentorDetails.id,
+    });
+    console.log(booking);
+    toast({
+      title: "Success",
+      description: "Booking SuccessFully Created",
+    });
+    router.push("/bookings");
+  };
+
   useEffect(() => {
+    const email = user?.emailAddresses[0].emailAddress;
+    const isSuccessfull = searchParams.get("success");
+    const tempDate = searchParams.get("date");
+    const start_time = searchParams.get("start_time");
+
+    if (isSuccessfull === "false") {
+      toast({
+        title: "Fail",
+        variant: "destructive",
+        description: "Booking Failed, Try Again",
+      });
+    } else if (isSuccessfull !== null && email !== undefined) {
+      handleSuccessfull(email, tempDate + "", start_time ?? "");
+    }
     getMentorDetails();
-  }, []);
+  }, [user]);
 
   if (isAvailable === false) {
     return (

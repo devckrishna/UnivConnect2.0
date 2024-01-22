@@ -14,6 +14,9 @@ export default authMiddleware({
     "/api/user/mentor/getbyemail",
     "/api/user/mentor/createslot",
     "/api/user/mentor/getSlot",
+    "/api/booking",
+    "/api/booking/getmentorbookings",
+    "/api/booking/getuserbookings",
   ],
 });
 

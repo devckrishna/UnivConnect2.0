@@ -26,7 +26,6 @@ model User {
 
 model Booking {
   id      String @id @default(uuid())
-  slots   String
   date    String
   student User   @relation(name: "StudentBooking", fields: [user_id], references: [id])
   user_id String
@@ -34,7 +33,6 @@ model Booking {
   mentor     User   @relation(name: "MentorBooking", fields: [mentor_id], references: [id])
   mentor_id  String
   start_time String
-  end_time   String
 }
 
 model Slot {

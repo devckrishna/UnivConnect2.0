@@ -58,7 +58,7 @@ const OnBoarding = () => {
           country: country,
           image: "default.png",
           gender: gender,
-          isMentor: true,
+          isMentor: false,
         });
       }
       router.push("/dashboard");

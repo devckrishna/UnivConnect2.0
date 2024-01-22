@@ -42,8 +42,8 @@ export async function POST(request: NextRequest) {
           enabled: false,
         },
 
-        success_url: `${process.env.url}/bookings`,
-        cancel_url: `${process.env.url}/explore`,
+        success_url: `${process.env.url}/mentor/${body[0]["mentor_id"]}?success=true&date=${body[0]["date"]}&start_time=${body[0]["start_time"]}`,
+        cancel_url: `${process.env.url}/mentor/${body[0]["mentor_id"]}?success=false`,
       });
       return NextResponse.json({ session });
     } else {
